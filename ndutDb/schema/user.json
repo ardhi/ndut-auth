@@ -1,0 +1,67 @@
+{
+  "properties": {
+    "username": {
+      "type": "String",
+      "length": "20",
+      "required": true
+    },
+    "password": {
+      "type": "String",
+      "length": 100,
+      "required": true
+    },
+    "email": {
+      "type": "String",
+      "length": 50,
+      "required": true
+    },
+    "firstName": {
+      "type": "String",
+      "length": 50,
+      "required": true
+    },
+    "lastName": {
+      "type": "String",
+      "length": 50,
+      "required": true
+    },
+    "address1": "String",
+    "address2": "String",
+    "city": {
+      "type": "String",
+      "length": 50,
+      "required": true
+    },
+    "zipCode": {
+      "type": "String",
+      "length": 10
+    },
+    "state": {
+      "type": "String",
+      "length": 50
+    },
+    "country": {
+      "type": "String",
+      "length": 2,
+      "required": true
+    },
+    "phone": {
+      "type": "String",
+      "length": 50
+    },
+    "status": {
+      "type": "String",
+      "length": 20
+    }
+  },
+  "hidden": ["password"],
+  "feature": {
+    "createdAt": true,
+    "updatedAt": true,
+    "deletedAt": true
+  },
+  "override": {
+    "schema": false,
+    "builtinFixture": true
+  }
+}
