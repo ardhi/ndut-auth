@@ -63,5 +63,6 @@
   "override": {
     "schema": false,
     "builtinFixture": true
-  }
+  },
+  "disableAliasCall": true
 }
