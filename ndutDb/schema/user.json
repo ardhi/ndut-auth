@@ -61,7 +61,7 @@
     "deletedAt": true
   },
   "override": {
-    "schema": false,
+    "schema": true,
     "builtinFixture": true
   },
   "disableAliasCall": true

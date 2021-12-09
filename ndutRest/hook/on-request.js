@@ -10,6 +10,8 @@ module.exports = async function (request, reply) {
     if (_.isEmpty(strategy)) throw new Error('Authorization header is empty!')
     if (strategy === 'Basic' && config.strategy.basic) user = await this.ndutAuth.helper.getUserByBasicAuth(request, reply)
   } catch (err) {
-    throw this.Boom.boomify(err, { statusCode: 401 })
+    console.log(err)
+    if (!err.isBoom) err = this.Boom.boomify(err, { statusCode: 401 })
+    throw err
   }
 }
