@@ -5,5 +5,6 @@
   "firstName": "Sys",
   "lastName": "Admin",
   "city": "Jakarta",
-  "country": "ID"
+  "country": "ID",
+  "status": "ENABLED"
 }]
