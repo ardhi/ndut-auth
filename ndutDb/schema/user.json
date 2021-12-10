@@ -10,6 +10,11 @@
       "length": 100,
       "required": true
     },
+    "token": {
+      "type": "String",
+      "length": 100,
+      "required": true
+    },
     "email": {
       "type": "String",
       "length": 50,
@@ -54,7 +59,7 @@
       "length": 20
     }
   },
-  "hidden": ["password"],
+  "hidden": ["password", "token"],
   "feature": {
     "createdAt": true,
     "updatedAt": true,
