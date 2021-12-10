@@ -1,15 +1,30 @@
 const { _, getNdutConfig } = require('ndut-helper')
-
+const outmatch = require('outmatch')
 const strategies = ['Basic', 'Bearer', 'JWT']
 
 module.exports = async function (request, reply) {
   const site = request.site || {}
   const config = getNdutConfig(this, 'ndut-auth')
-  // TODO: check route needs to be authenticated or not
+  const restConfig = getNdutConfig(this, 'ndut-rest')
+  if (!request.routerPath || !request.routerMethod) return
+  let found = false
+  _.each(this.ndutAuth.permissions, p => {
+    const isPath = outmatch(`/${restConfig.prefix}${p.path}`)(request.routerPath)
+    let isMethod = false
+    const methods = _.isString(request.routerMethod) ? [request.routerMethod] : request.routerMethod
+    _.each(methods, m => {
+      if (outmatch(p.method)(m)) isMethod = true
+    })
+    if (isPath && isMethod) {
+      found = true
+      return false
+    }
+  })
+  if (!found) return
   let user = null
   let strategy = _.get(request, 'headers.authorization', '').split(' ')[0]
-  if (_.isEmpty(strategy)) throw new Error('Authorization header is empty!')
-  if (!strategies.includes(strategy)) throw new Error('Unsupported authentication method')
+  if (_.isEmpty(strategy)) throw this.Boom.unauthorized('Access denied')
+  if (!strategies.includes(strategy)) throw this.Boom.unauthorized('Unsupported authentication method')
   try {
     if (strategy === 'Basic' && config.strategy.basic) user = await this.ndutAuth.helper.getUserByBasicAuth(request, reply)
     else if (strategy === 'Bearer' && config.strategy.bearer) user = await this.ndutAuth.helper.getUserByBearerAuth(request, reply)
@@ -23,5 +38,3 @@ module.exports = async function (request, reply) {
     throw err
   }
 }
-
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImFwaUtleSI6ImZjYTFhMDg5ODIzNjBlZjQyNDFmZDNjN2M5MGFkNzgwIiwiaWF0IjoxNjM5MTExNTM4LCJleHAiOjE2Mzk3MTYzMzh9.c0YuyjkPNZQd4JihZW4jBR4RrQVXeyL55bWbOTTcftQ

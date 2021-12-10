@@ -26,6 +26,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "fast-jwt": "^1.4.0",
-    "ndut-helper": "file:../ndut-helper"
+    "ndut-helper": "file:../ndut-helper",
+    "outmatch": "^0.7.0"
   }
 }

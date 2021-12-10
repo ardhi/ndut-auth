@@ -12,5 +12,5 @@ module.exports = async function (fastify) {
   options.jwt = options.jwt || { key: 'xYNHkSvQR2hBgvf9GhZi' }
   options.jwt.expiresIn = options.jwt.expiresIn || (1000 * 60 * 60 * 24 * 7)
   const dependency = ['ndut-db']
-  return { name, plugin, options, dependency }
+  return { name, plugin, options, dependency, appModes: ['serve', 'build'] }
 }
