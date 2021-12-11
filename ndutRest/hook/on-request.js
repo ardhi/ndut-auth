@@ -8,7 +8,7 @@ module.exports = async function (request, reply) {
   const restConfig = getNdutConfig(this, 'ndut-rest')
   if (!request.routerPath || !request.routerMethod) return
   let found = false
-  _.each(this.ndutAuth.permissions, p => {
+  _.each(this.ndutAuth.protectedRoutes, p => {
     const isPath = outmatch(`/${restConfig.prefix}${p.path}`)(request.routerPath)
     let isMethod = false
     const methods = _.isString(request.routerMethod) ? [request.routerMethod] : request.routerMethod
