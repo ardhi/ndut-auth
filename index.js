@@ -6,9 +6,10 @@ module.exports = async function (fastify) {
   const options = getNdutConfig(fastify, name) || {}
   options.strategy = {
     basic: true,
-    bearer: true,
+    apiKey: true,
     jwt: true
   }
+  options.apiKeyQueryString = options.apiKeyQueryString || 'apiKey'
   options.jwt = options.jwt || { key: 'xYNHkSvQR2hBgvf9GhZi' }
   options.jwt.expiresIn = options.jwt.expiresIn || (1000 * 60 * 60 * 24 * 7)
   const dependency = ['ndut-db']
