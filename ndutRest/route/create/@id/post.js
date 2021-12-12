@@ -4,14 +4,14 @@ const createJwt = require('../../../../lib/misc/create-jwt')
 
 module.exports = {
   schema: {
-    description: 'Create your own authentication token',
+    description: 'Create and get your own authentication token',
     tags: ['Auth'],
     params: {
       type: 'object',
       properties: {
         id: {
           type: 'string',
-          description: 'Choose between "apiKey" for bearer token or "jwt" for jsonwebtoken'
+          description: 'Choose between "generic" for standard bearer token or "jwt" for jsonwebtoken'
         }
       },
       required: ['id']
@@ -34,7 +34,7 @@ module.exports = {
     const { username, password } = request.body || {}
     try {
       const result = await this.ndutAuth.helper.getUserByUsernamePassword(username, password)
-      if (request.params.id === 'apiKey') return { token: this.ndutAuth.helper.hash(result.password) }
+      if (request.params.id === 'generic') return { token: this.ndutAuth.helper.hash(result.password) }
       if (request.params.id === 'jwt') return createJwt(this, result)
     } catch (err) {
       if (!err.isBoom) err = this.Boom.boomify(err)

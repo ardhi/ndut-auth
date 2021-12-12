@@ -21,10 +21,11 @@ const isProtectedRoute = (request) => {
 
 const getStrategy = request => {
   const config = getNdutConfig(request.server, 'ndut-auth')
-  if (!_.isEmpty(request.query[config.apiKeyQueryString]) && config.strategy.apiKey) return 'apiKeyQuery'
-  const method = _.get(request, 'headers.authorization', '').split(' ')[0]
+  if (!_.isEmpty(request.query[config.apiKeyQueryString]) && config.strategy.apiKey) return 'apiKeyQs'
+  let method = _.get(request, 'headers.authorization', '').split(' ')[0]
   if (method === 'Basic' && config.strategy.apiKey) return 'basic'
   if (method === 'Bearer' && config.strategy.apiKey) return 'apiKey'
+  if (!_.isEmpty(request.headers[config.apiKeyHeader.toLowerCase()])) return 'apiKeyHeader'
   return false
 }
 
@@ -36,7 +37,8 @@ module.exports = async function (request, reply) {
   try {
     if (strategy === 'basic') user = await this.ndutAuth.helper.getUserByBasicAuth(request, reply)
     else if (strategy === 'apiKey') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply)
-    else if (strategy === 'apiKeyQuery') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply, true)
+    else if (strategy === 'apiKeyQs') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply, 'qs')
+    else if (strategy === 'apiKeyHeader') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply, 'header')
     else throw this.Boom.unauthorized('Can\'t find any supported authentication methods')
   } catch (err) {
     if (!err.isBoom) err = this.Boom.boomify(err)
