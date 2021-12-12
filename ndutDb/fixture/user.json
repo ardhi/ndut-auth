@@ -6,5 +6,6 @@
   "lastName": "Admin",
   "city": "Jakarta",
   "country": "ID",
-  "status": "ENABLED"
+  "status": "ENABLED",
+  "siteId": 1
 }]

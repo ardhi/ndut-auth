@@ -1,4 +1,4 @@
-const supported = ['apiKey', 'jwt']
+const supported = ['generic', 'jwt']
 const { _ } = require('ndut-helper')
 const createJwt = require('../../../../lib/misc/create-jwt')
 
@@ -33,7 +33,8 @@ module.exports = {
     if (!supported.includes(request.params.id)) throw this.Boom.notFound('Resource not found')
     const { username, password } = request.body || {}
     try {
-      const result = await this.ndutAuth.helper.getUserByUsernamePassword(username, password)
+      const siteId = request.site ? request.site.id : null
+      const result = await this.ndutAuth.helper.getUserByUsernamePassword(username, password, siteId)
       if (request.params.id === 'generic') return { token: this.ndutAuth.helper.hash(result.password) }
       if (request.params.id === 'jwt') return createJwt(this, result)
     } catch (err) {

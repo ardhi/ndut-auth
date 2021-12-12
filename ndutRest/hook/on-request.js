@@ -30,7 +30,6 @@ const getStrategy = request => {
 }
 
 module.exports = async function (request, reply) {
-  if (!request.routerPath || !request.routerMethod) return
   if (!isProtectedRoute(request)) return
   let user = null
   const strategy = getStrategy(request)
@@ -40,6 +39,7 @@ module.exports = async function (request, reply) {
     else if (strategy === 'apiKeyQs') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply, 'qs')
     else if (strategy === 'apiKeyHeader') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply, 'header')
     else throw this.Boom.unauthorized('Can\'t find any supported authentication methods')
+    request.user = user
   } catch (err) {
     if (!err.isBoom) err = this.Boom.boomify(err)
     err.output.statusCode = 401

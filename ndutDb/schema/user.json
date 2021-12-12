@@ -53,21 +53,19 @@
     "phone": {
       "type": "String",
       "length": 50
-    },
-    "status": {
-      "type": "String",
-      "length": 20
     }
   },
-  "hidden": ["password", "token"],
+  "hiddenProperties": ["password", "token"],
   "feature": {
     "createdAt": true,
     "updatedAt": true,
-    "deletedAt": true
+    "deletedAt": true,
+    "siteId": true,
+    "status": true
   },
   "override": {
     "schema": true,
     "builtinFixture": true
   },
-  "disableAliasCall": true
+  "disableAliasCall": false
 }
