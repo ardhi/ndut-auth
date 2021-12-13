@@ -1,7 +1,6 @@
-const { _ } = require('ndut-helper')
 const hashPassword = require('../../lib/misc/hash-password')
 
-const replacePassword = async (scope, item) => {
+const replacePassword = async (scope, item, _) => {
   const { isBcryptString, hash } = scope.ndutAuth.helper
   if (_.isEmpty(item.password)) return
   if (!isBcryptString(item.password)) item.password = await hashPassword(item.password)
@@ -10,6 +9,7 @@ const replacePassword = async (scope, item) => {
 
 module.exports = {
   'before save': async function (ctx) {
-    await replacePassword(this, ctx.instance || ctx.data)
+    const { _ } = this.ndut.helper
+    await replacePassword(this, ctx.instance || ctx.data, _)
   }
 }

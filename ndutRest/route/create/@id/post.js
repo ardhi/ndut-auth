@@ -1,5 +1,4 @@
 const supported = ['generic', 'jwt']
-const { _ } = require('ndut-helper')
 const createJwt = require('../../../../lib/misc/create-jwt')
 
 module.exports = {

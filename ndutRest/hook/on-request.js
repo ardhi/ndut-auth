@@ -1,7 +1,7 @@
-const { _, getNdutConfig } = require('ndut-helper')
 const outmatch = require('outmatch')
 
 const isProtectedRoute = (request) => {
+  const { _, getNdutConfig } = request.server.ndut.helper
   const restConfig = getNdutConfig(request.server, 'ndut-rest')
   let found = false
   _.each(request.server.ndutAuth.protectedRoutes, p => {
@@ -20,6 +20,7 @@ const isProtectedRoute = (request) => {
 }
 
 const getStrategy = request => {
+  const { _, getNdutConfig } = request.server.ndut.helper
   const config = getNdutConfig(request.server, 'ndut-auth')
   if (!_.isEmpty(request.query[config.apiKeyQueryString]) && config.strategy.apiKey) return 'apiKeyQs'
   let method = _.get(request, 'headers.authorization', '').split(' ')[0]
