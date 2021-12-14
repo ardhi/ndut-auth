@@ -1,15 +1,3 @@
-const isProtectedRoute = (request) => {
-  const { _, getNdutConfig } = request.server.ndut.helper
-  const restConfig = getNdutConfig(request.server, 'ndut-rest')
-
-  const routes = _.map(request.server.ndutAuth.protectedRoutes, r => {
-    r.path = `/${restConfig.prefix}${p.path}`
-    return r
-  })
-
-  return this.ndutAuth.helper.routeMatch(request, routes)
-}
-
 const getStrategy = request => {
   const { _, getNdutConfig } = request.server.ndut.helper
   const config = getNdutConfig(request.server, 'ndut-auth')
@@ -22,7 +10,7 @@ const getStrategy = request => {
 }
 
 module.exports = async function (request, reply) {
-  if (isProtectedRoute) request.protectedRoute = true
+  request.protectedRoute = this.ndutAuth.helper.routeMatch(request, this.ndutAuth.protectedRoutes)
   if (!request.protectedRoute) return
   let user = null
   const strategy = getStrategy(request)
