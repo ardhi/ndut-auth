@@ -9,7 +9,7 @@ module.exports = async function (fastify) {
   }
   options.apiKeyQueryString = options.apiKeyQueryString || 'apiKey'
   options.apiKeyHeader = options.apiKeyHeader || 'X-Api-Key'
-  options.jwt = options.jwt || { key: 'xYNHkSvQR2hBgvf9GhZi' }
+  options.jwt = options.jwt || { key: 'Jaya!Jaya!Jaya!' }
   options.jwt.expiresIn = options.jwt.expiresIn || (1000 * 60 * 60 * 24 * 7)
   const dependency = ['ndut-db']
   return { name, plugin, options, dependency, appModes: ['serve', 'build'] }

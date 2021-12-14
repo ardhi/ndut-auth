@@ -26,7 +26,6 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "fast-jwt": "^1.4.0",
-    "fastify-plugin": "^3.0.0",
-    "outmatch": "^0.7.0"
+    "fastify-plugin": "^3.0.0"
   }
 }

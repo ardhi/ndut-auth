@@ -1,22 +1,13 @@
-const outmatch = require('outmatch')
-
 const isProtectedRoute = (request) => {
   const { _, getNdutConfig } = request.server.ndut.helper
   const restConfig = getNdutConfig(request.server, 'ndut-rest')
-  let found = false
-  _.each(request.server.ndutAuth.protectedRoutes, p => {
-    const isPath = outmatch(`/${restConfig.prefix}${p.path}`)(request.routerPath)
-    let isMethod = false
-    const methods = _.isString(request.routerMethod) ? [request.routerMethod] : request.routerMethod
-    _.each(methods, m => {
-      if (outmatch(p.method)(m)) isMethod = true
-    })
-    if (isPath && isMethod) {
-      found = true
-      return false
-    }
+
+  const routes = _.map(request.server.ndutAuth.protectedRoutes, r => {
+    r.path = `/${restConfig.prefix}${p.path}`
+    return r
   })
-  return found
+
+  return this.ndutAuth.helper.routeMatch(request, routes)
 }
 
 const getStrategy = request => {
@@ -31,7 +22,8 @@ const getStrategy = request => {
 }
 
 module.exports = async function (request, reply) {
-  if (!isProtectedRoute(request)) return
+  if (isProtectedRoute) request.protectedRoute = true
+  if (!request.protectedRoute) return
   let user = null
   const strategy = getStrategy(request)
   try {

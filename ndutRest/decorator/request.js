@@ -1,3 +1,4 @@
 module.exports = {
-  user: null
+  user: null,
+  protectedRoute: null
 }
