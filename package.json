@@ -25,7 +25,6 @@
   "homepage": "https://github.com/ardhi/ndut-auth#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "fast-jwt": "^1.4.0",
-    "fastify-plugin": "^3.0.0"
+    "fast-jwt": "^1.4.0"
   }
 }
