@@ -1,6 +1,6 @@
 const getStrategy = request => {
   const { _, getNdutConfig } = request.server.ndut.helper
-  const config = getNdutConfig(request.server, 'ndut-auth')
+  const config = getNdutConfig('ndut-auth')
   if (!_.isEmpty(request.query[config.apiKeyQueryString]) && config.strategy.apiKey) return 'apiKeyQs'
   let method = _.get(request, 'headers.authorization', '').split(' ')[0]
   if (method === 'Basic' && config.strategy.apiKey) return 'basic'

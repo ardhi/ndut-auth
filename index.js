@@ -1,10 +1,10 @@
 const crypto = require('crypto')
 
-module.exports = async function (fastify) {
-  const { fp } = fastify.ndut.helper
+module.exports = async function () {
+  const { fp } = this.ndut.helper
   const plugin = fp(require('./lib/plugin'))
   const name = 'ndut-auth'
-  const options = fastify.ndut.helper.getNdutConfig(fastify, name) || {}
+  const options = this.ndut.helper.getNdutConfig(name) || {}
   options.strategy = {
     basic: true,
     apiKey: true

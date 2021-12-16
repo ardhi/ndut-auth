@@ -35,7 +35,7 @@ module.exports = {
       const siteId = request.site ? request.site.id : null
       const result = await this.ndutAuth.helper.getUserByUsernamePassword(username, password, siteId)
       if (request.params.id === 'generic') return { token: this.ndutAuth.helper.hash(result.password) }
-      if (request.params.id === 'jwt') return createJwt(this, result)
+      if (request.params.id === 'jwt') return createJwt.call(this, result)
     } catch (err) {
       if (!err.isBoom) err = this.Boom.boomify(err)
       err.output.statusCode = 422

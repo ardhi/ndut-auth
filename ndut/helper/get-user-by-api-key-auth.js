@@ -1,8 +1,8 @@
-const verifyJwt = require('../misc/verify-jwt')
+const verifyJwt = require('../../lib/misc/verify-jwt')
 
 module.exports = async function (request, reply, method = 'bearer') {
   const { getNdutConfig } = this.ndut.helper
-  const authConfig = getNdutConfig(this, 'ndut-auth')
+  const authConfig = getNdutConfig('ndut-auth')
   let token = ''
   if (method === 'qs') token = request.query[authConfig.apiKeyQueryString]
   else if (method === 'header') token = request.headers[authConfig.apiKeyHeader.toLowerCase()]
@@ -14,7 +14,7 @@ module.exports = async function (request, reply, method = 'bearer') {
     if (!result) throw new this.Boom.Boom('Invalid/expired token or user is disabled', { token: { token: 'invalid' } })
     return result
   }
-  const decoded = await verifyJwt(this, token)
+  const decoded = await verifyJwt.call(this, token)
   where.id = decoded.payload.uid
   const result = await this.ndutDb.findOne('AuthUser', request, { where })
   if (!result) throw new this.Boom.Boom('Invalid token or user is disabled', { token: { token: 'invalid' } })

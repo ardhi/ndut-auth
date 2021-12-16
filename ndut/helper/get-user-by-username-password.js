@@ -1,4 +1,4 @@
-const verifyPassword = require('../misc/verify-password')
+const verifyPassword = require('../../lib/misc/verify-password')
 
 module.exports = async function (username, password, siteId) {
   const { aneka } = this.ndut.helper

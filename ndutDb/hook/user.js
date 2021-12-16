@@ -1,6 +1,6 @@
 const hashPassword = require('../../lib/misc/hash-password')
-const isBcryptString = require('../../lib/helper/is-bcrypt-string')
-const hash = require('../../lib/helper/hash')
+const isBcryptString = require('../../ndut/helper/is-bcrypt-string')
+const hash = require('../../ndut/helper/hash')
 
 module.exports = {
   'before save': async function (ctx) {
