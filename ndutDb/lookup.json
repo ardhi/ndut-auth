@@ -1,0 +1,7 @@
+[
+  { "value": "ENABLED", "column": "status" },
+  { "value": "DISABLED", "column": "status" },
+  { "value": "BANNED", "column": "status" },
+  { "value": "NEWPWREQ", "column": "status", "name": "New Password Request" },
+  { "value": "AWAITACTV", "column": "status", "name": "Awaiting for Activation" }
+]
