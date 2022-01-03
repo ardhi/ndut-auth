@@ -3,5 +3,5 @@
   { "value": "DISABLED", "column": "status" },
   { "value": "BANNED", "column": "status" },
   { "value": "NEWPWREQ", "column": "status", "name": "New Password Request" },
-  { "value": "AWAITACTV", "column": "status", "name": "Awaiting for Activation" }
+  { "value": "UNVERIFIED", "column": "status", "name": "Unverified New Member" }
 ]
