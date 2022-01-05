@@ -1,0 +1,17 @@
+[
+  {
+    "type": "rest",
+    "subject": "/change-password",
+    "action": "update"
+  },
+  {
+    "type": "rest",
+    "subject": "/profile",
+    "action": ["read", "update"]
+  },
+  {
+    "type": "rest",
+    "subject": "/token/:id",
+    "action": "create"
+  }
+]
