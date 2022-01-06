@@ -1,6 +1,6 @@
 {
   "name": "ndut-auth",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "User Authentication for Ndut Framework",
   "main": "index.js",
   "scripts": {
