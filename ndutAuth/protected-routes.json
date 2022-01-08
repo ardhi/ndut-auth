@@ -1,0 +1,6 @@
+{
+  "/user": ["GET", "POST"],
+  "/user/:id": ["GET", "PUT", "DELETE"],
+  "/change-password": ["PUT"],
+  "/profile": ["GET", "PUT"]
+}
