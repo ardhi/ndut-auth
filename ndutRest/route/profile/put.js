@@ -5,9 +5,10 @@ module.exports = {
   },
   handler: async function (request, reply) {
     const { _ } = this.ndut.helper
+    const { getModelByAlias } = this.ndutDb.helper
     const id = request.user.id
     const body = _.omit(request.body, ['password', 'token', 'status', 'id', 'siteId'])
-    const model = this.ndutDb.helper.getModelByAlias('auth-user')
+    const model = await getModelByAlias('auth-user')
     await this.ndutDb.update(model, request, { id }, body)
     const data = await this.ndutDb.findById(model, request, id)
     return {

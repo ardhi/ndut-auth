@@ -1,0 +1,14 @@
+{
+  "name": "ndut-auth",
+  "strategy": {
+    "basic": true,
+    "apiKey": true
+  },
+  "apiKeyQueryString": "apiKey",
+  "apiKeyHeader": "X-Api-Key",
+  "jwt": {
+    "key": "ndut^3=ndut+ndut#eh?",
+    "expiresIn": 604800000
+  },
+  "dependency": ["ndut-db"]
+}

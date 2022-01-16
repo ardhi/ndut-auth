@@ -1,6 +1,6 @@
-const getStrategy = request => {
+const getStrategy = async request => {
   const { _, getNdutConfig } = request.server.ndut.helper
-  const config = getNdutConfig('ndut-auth')
+  const config = await getNdutConfig('ndut-auth')
   if (!_.isEmpty(request.query[config.apiKeyQueryString]) && config.strategy.apiKey) return 'apiKeyQs'
   let method = _.get(request, 'headers.authorization', '').split(' ')[0]
   if (method === 'Basic' && config.strategy.apiKey) return 'basic'
@@ -13,7 +13,7 @@ module.exports = async function (request, reply) {
   request.protectedRoute = this.ndutAuth.helper.routeMatch(request, this.ndutAuth.protectedRoutes)
   if (!request.protectedRoute) return
   let user = null
-  const strategy = getStrategy(request)
+  const strategy = await getStrategy(request)
   try {
     if (strategy === 'basic') user = await this.ndutAuth.helper.getUserByBasicAuth(request, reply)
     else if (strategy === 'apiKey') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply)

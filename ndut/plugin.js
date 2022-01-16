@@ -12,23 +12,20 @@ const sanitize = (routes, prefix = '') => {
   })
 }
 
-module.exports = async function (scope, options) {
+const plugin = async function (scope, options) {
   const { _, aneka, getNdutConfig } = scope.ndut.helper
   const { requireBase } = aneka
-  const { config } = scope
-  const restConfig = getNdutConfig('ndut-rest')
+  const config = await scope.ndut.helper.getConfig()
+  const restConfig = await getNdutConfig('ndut-rest')
   // TODO: protected routes for non-api routes?
   let protectedRoutes = []
-  for (const n of config.nduts) {
+  for (let n of config.nduts) {
+    n = await getNdutConfig(n)
     try {
       const routes = await requireBase(n.dir + '/ndutAuth/protected-routes', scope) || ['*']
       protectedRoutes = _.concat(protectedRoutes, sanitize(routes, `/${n.prefix}/`))
     } catch (err) {}
   }
-  try {
-    const routes = await requireBase(config.dir.base + '/ndutAuth/protected-routes', scope) || ['*']
-    protectedRoutes = _.concat(protectedRoutes, sanitize(routes, '/'))
-  } catch (err) {}
   protectedRoutes = _.map(protectedRoutes, r => {
     r.path = `/${restConfig.prefix}${r.path}`
     return r
@@ -36,4 +33,9 @@ module.exports = async function (scope, options) {
 
   scope.ndutAuth.options = options
   scope.ndutAuth.protectedRoutes = protectedRoutes
+}
+
+module.exports = async function () {
+  const { fp } = this.ndut.helper
+  return fp(plugin)
 }
