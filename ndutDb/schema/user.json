@@ -63,7 +63,7 @@
     "siteId": true,
     "status": true
   },
-  "override": {
+  "extend": {
     "schema": true,
     "builtinFixture": true
   },
