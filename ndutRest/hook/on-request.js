@@ -10,22 +10,26 @@ const getStrategy = async request => {
 }
 
 module.exports = async function (request, reply) {
-  request.protectedRoute = this.ndutAuth.helper.routeMatch(request, this.ndutAuth.protectedRoutes)
-  if (!request.protectedRoute) return
-  let user = null
-  const strategy = await getStrategy(request)
-  try {
-    if (strategy === 'basic') user = await this.ndutAuth.helper.getUserByBasicAuth(request, reply)
-    else if (strategy === 'apiKey') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply)
-    else if (strategy === 'apiKeyQs') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply, 'qs')
-    else if (strategy === 'apiKeyHeader') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply, 'header')
-    else throw this.Boom.unauthorized('Can\'t find any supported authentication methods')
-    request.user = user
-  } catch (err) {
-    if (!err.isBoom) err = this.Boom.boomify(err)
-    err.output.statusCode = 401
-    err.reformat()
-    reply.header('WWW-Authenticate', strategy)
-    throw err
+  request.protected = request.protected || {}
+  for (const n of ['route', 'rest']) {
+    request.protected[n] = this.ndutAuth.helper.routeMatch(request, this.ndutAuth.protected[n])
+    if (request.protected[n]) {
+      let user = null
+      const strategy = await getStrategy(request)
+      try {
+        if (strategy === 'basic') user = await this.ndutAuth.helper.getUserByBasicAuth(request, reply)
+        else if (strategy === 'apiKey') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply)
+        else if (strategy === 'apiKeyQs') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply, 'qs')
+        else if (strategy === 'apiKeyHeader') user = await this.ndutAuth.helper.getUserByApiKeyAuth(request, reply, 'header')
+        else throw this.Boom.unauthorized('Can\'t find any supported authentication methods')
+        request.user = user
+      } catch (err) {
+        if (!err.isBoom) err = this.Boom.boomify(err)
+        err.output.statusCode = 401
+        err.reformat()
+        reply.header('WWW-Authenticate', strategy)
+        throw err
+      }
+    }
   }
 }

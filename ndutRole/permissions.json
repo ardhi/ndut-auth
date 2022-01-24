@@ -2,32 +2,25 @@
   {
     "type": "rest",
     "subject": "/change-password",
-    "action": "update"
+    "action": "update",
+    "private": true
   },
   {
     "type": "rest",
     "subject": "/profile",
-    "action": ["read", "update"]
+    "action": ["read", "update"],
+    "private": true
   },
   {
     "type": "rest",
     "subject": "/token/:id",
-    "action": "create"
+    "action": "create",
+    "private": true
   },
   {
     "type": "rest",
-    "subject": "/user",
-    "action": ["read", "create"],
-    "conditions": {
-      "access": { "$in": ["admin"] }
-    }
-  },
-  {
-    "type": "rest",
-    "subject": "/user/:id",
-    "action": ["read", "update", "remove"],
-    "conditions": {
-      "access": { "$in": ["admin"] }
-    }
+    "subject": ["/user", "/user/:id"],
+    "action": ["read", "create", "update", "remove"],
+    "access": "admin"
   }
 ]
