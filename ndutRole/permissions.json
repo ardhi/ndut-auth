@@ -3,19 +3,19 @@
     "type": "rest",
     "subject": "/change-password",
     "action": "update",
-    "private": true
+    "ndutAuthPrivate": true
   },
   {
     "type": "rest",
     "subject": "/profile",
     "action": ["read", "update"],
-    "private": true
+    "ndutAuthPrivate": true
   },
   {
     "type": "rest",
     "subject": "/token/:id",
     "action": "create",
-    "private": true
+    "ndutAuthPrivate": true
   },
   {
     "type": "rest",

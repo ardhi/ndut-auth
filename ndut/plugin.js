@@ -14,7 +14,7 @@ const sanitize = (routes, prefix = '') => {
 
 const plugin = async function (scope, options) {
   const { _, aneka, getNdutConfig } = scope.ndut.helper
-  const { requireBase } = aneka
+  const { requireBase, dump } = aneka
   const config = await scope.ndut.helper.getConfig()
   let restConfig
   if (scope.ndutRest) restConfig = await getNdutConfig('ndut-rest')
