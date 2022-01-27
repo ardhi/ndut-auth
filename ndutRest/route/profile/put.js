@@ -9,11 +9,6 @@ module.exports = {
     const id = request.user.id
     const body = _.omit(request.body, ['password', 'token', 'status', 'id', 'siteId'])
     const model = await getModelByAlias('auth-user')
-    await this.ndutDb.update(model, request, { id }, body)
-    const data = await this.ndutDb.findById(model, request, id)
-    return {
-      data,
-      message: 'Your profile has been successfully updated'
-    }
+    return await this.ndutApi.helper.update(model, { id }, body, { message: 'Your profile has been successfully updated' })
   }
 }

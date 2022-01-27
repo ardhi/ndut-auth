@@ -24,7 +24,7 @@ module.exports = {
     // TODO: strong password detection
     const check = await verifyPassword(request.body.current, request.user.password, request.site.id)
     if (!check) throw new this.Boom.Boom('Invalid password', { data: { current: 'invalid' }})
-    await this.ndutDb.update(model, request, { id }, { password: request.body.new })
+    await this.ndutApi.helper.update(model, { id }, { password: request.body.new })
     return {
       message: 'Your password has been successfully updated'
     }
