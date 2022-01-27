@@ -1,8 +1,5 @@
-module.exports = async function (model, request, ...args) {
+module.exports = async function ({ model, body = {}, filter = {} }) {
+  const supported = await this.ndutAuth.helper.isUserSupportedModel(model)
   const private = await this.ndutAuth.helper.isPrivateModel(model)
-  args[0] = args[0] || {}
-  if (private && request.user) args[0].userId = request.user.id
-  args[1] = args[1] || {}
-  if (request.user) args[1].userId = request.user.id
-  return args
+  if ((supported || private) && (filter.user || {}).id) body.userId = filter.user.id
 }

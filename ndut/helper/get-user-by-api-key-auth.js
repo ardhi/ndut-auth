@@ -11,7 +11,7 @@ module.exports = async function (request, reply, method = 'bearer') {
   if (this.ndutAuth.helper.isMd5String(token)) {
     where.token = this.ndutAuth.helper.hash(token)
     try {
-      const item = await this.ndutApi.helper.findOne('AuthUser', { where })
+      const item = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where } })
       result = item.data
     } catch (err) {}
       if (!result) throw new this.Boom.Boom('Invalid/expired token or user is disabled', { token: { token: 'invalid' } })
@@ -21,7 +21,7 @@ module.exports = async function (request, reply, method = 'bearer') {
   where.id = decoded.payload.uid
   let result
   try {
-    const item = await this.ndutApi.helper.findOne('AuthUser', { where })
+    const item = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where } })
     result = item.data
   } catch (err) {}
   if (!result) throw new this.Boom.Boom('Invalid token or user is disabled', { token: { token: 'invalid' } })

@@ -19,12 +19,13 @@ module.exports = {
   },
   handler: async function (request, reply) {
     const { _ } = this.ndut.helper
-    const id = request.user.id
     const model = 'AuthUser'
     // TODO: strong password detection
     const check = await verifyPassword(request.body.current, request.user.password, request.site.id)
     if (!check) throw new this.Boom.Boom('Invalid password', { data: { current: 'invalid' }})
-    await this.ndutApi.helper.update(model, { id }, { password: request.body.new })
+    const params = { id: request.user.id }
+    const body = { password: request.body.new }
+    await this.ndutApi.helper.update({ model, params, body })
     return {
       message: 'Your password has been successfully updated'
     }
