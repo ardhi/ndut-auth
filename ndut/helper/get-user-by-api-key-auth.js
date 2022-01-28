@@ -1,8 +1,8 @@
 const verifyJwt = require('../../lib/misc/verify-jwt')
 
-module.exports = async function (request, reply, method = 'bearer') {
+module.exports = async function (request, method = 'bearer') {
   const { getNdutConfig } = this.ndut.helper
-  const authConfig = await getNdutConfig('ndut-auth')
+  const authConfig = getNdutConfig('ndut-auth')
   let token = ''
   if (method === 'qs') token = request.query[authConfig.apiKeyQueryString]
   else if (method === 'header') token = request.headers[authConfig.apiKeyHeader.toLowerCase()]

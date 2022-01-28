@@ -14,32 +14,27 @@ const sanitize = (routes, prefix = '') => {
 
 const plugin = async function (scope, options) {
   const { _, aneka, getNdutConfig } = scope.ndut.helper
-  const { requireBase, dump } = aneka
+  const { requireBase } = aneka
   const config = await scope.ndut.helper.getConfig()
   let restConfig
-  if (scope.ndutRest) restConfig = await getNdutConfig('ndut-rest')
-  // TODO: protected routes for non-api routes?
+  if (scope.ndutRest) restConfig = getNdutConfig('ndut-rest')
   scope.ndutAuth.protected = {}
-  const mapper = [
-    { name: 'ndut-route', instance: 'ndutRoute', alias: 'route' },
-    { name: 'ndut-rest', instance: 'ndutRest', alias: 'rest' }
-  ]
-  for (const m of mapper) {
-    if (!scope[m.instance]) continue
-    const opts = await getNdutConfig(m.name)
+  for (const m of ['route', 'rest', 'static']) {
+    const opts = getNdutConfig(m)
+    if (!opts) continue
     let items = []
-    for (let n of config.nduts) {
-      n = await getNdutConfig(n)
+    for (const n of config.nduts) {
+      const cfg = getNdutConfig(n)
       try {
-        const routes = await requireBase(`${n.dir}/ndutAuth/protected/${m.alias}.json`, scope) || ['*']
-        items = _.concat(items, sanitize(routes, `/${n.prefix}/`))
+        const routes = await requireBase(`${cfg.dir}/ndutAuth/protected/${m}.json`, scope) || ['*']
+        items = _.concat(items, sanitize(routes, `/${cfg.prefix}/`))
       } catch (err) {}
     }
     items = _.map(items, r => {
-      r.path = `/${opts.prefix}${r.path}`
+      r.path = `${opts.prefix === '' ? '' : ('/' + opts.prefix)}${r.path}`
       return r
     })
-    scope.ndutAuth.protected[m.alias] = items
+    scope.ndutAuth.protected[m] = items
   }
 }
 

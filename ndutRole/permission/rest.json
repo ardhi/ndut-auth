@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/change-password",
+    "method": "update",
+    "ndutAuthPrivate": true
+  },
+  {
+    "path": "/profile",
+    "method": ["read", "update"],
+    "ndutAuthPrivate": true
+  },
+  {
+    "path": "/token/:id",
+    "method": "create",
+    "ndutAuthPrivate": true
+  },
+  {
+    "path": ["/user", "/user/:id"],
+    "method": ["read", "create", "update", "remove"],
+    "access": "admin"
+  }
+]
