@@ -2,13 +2,19 @@
   "name": "ndut-auth",
   "strategy": {
     "basic": true,
-    "apiKey": true
+    "apiKey": true,
+    "login": true
   },
   "apiKeyQueryString": "apiKey",
   "apiKeyHeader": "X-Api-Key",
   "jwt": {
     "key": "ndut^3=ndut+ndut#eh?",
     "expiresIn": 604800000
+  },
+  "route": {
+    "unauthenticated": "goLogin",
+    "afterLogin": false,
+    "afterLogout": false
   },
   "dependency": ["ndut-db"]
 }
