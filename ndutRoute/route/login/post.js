@@ -10,5 +10,5 @@ module.exports = async function (request, reply) {
   const user = await getUserByUsernamePassword(username, password, (request.site || {}).id)
   request.session.user = user
   if (options.route.afterLogin) reply.redirect(options.route.afterLogin)
-  else reply.send('Login successfully')
+  else reply.view('auth:/login-successfull')
 }

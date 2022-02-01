@@ -1,3 +1,4 @@
 module.exports = async function (request, reply) {
-  return 'login form' // TODO: login form, maybe?
+  if (request.user) reply.view('route:/authenticated')
+  else reply.view('auth:/login-form', { url: { login: request.url } })
 }
