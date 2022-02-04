@@ -14,7 +14,7 @@ module.exports = async function (request, method = 'bearer') {
       const item = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where } })
       result = item.data
     } catch (err) {}
-      if (!result) throw this.Boom.badData('Invalid/expired token or user is disabled', { token: 'invalid' })
+      if (!result) throw this.Boom.badData('invalidExpiredTokenOrUserIsDisabled', { token: 'invalid', ndut: 'auth' })
     return result
   }
   const decoded = await verifyJwt.call(this, token)
@@ -24,8 +24,8 @@ module.exports = async function (request, method = 'bearer') {
     const item = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where } })
     result = item.data
   } catch (err) {}
-  if (!result) throw this.Boom.badData('Invalid token or user is disabled', { token: 'invalid' })
+  if (!result) throw this.Boom.badData('invalidTokenOrUserIsDisabled', { token: 'invalid', ndut: 'auth' })
   if (this.ndutAuth.helper.hash(decoded.payload.apiKey) !== result.token)
-    throw this.Boom.badData('Invalid/expired token. Please get a new one', { token: 'invalid' })
+    throw this.Boom.badData('invalidExpiredTokenPleaseGetANewOne', { token: 'invalid', ndut: 'auth' })
   return result
 }

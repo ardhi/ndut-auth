@@ -18,16 +18,16 @@ module.exports = {
     }
   },
   handler: async function (request, reply) {
-    const { _ } = this.ndut.helper
+    const { t } = this.ndutI18N.helper
     const model = 'AuthUser'
     // TODO: strong password detection
     const check = await verifyPassword(request.body.current, request.user.password, request.site.id)
-    if (!check) throw new this.Boom.Boom('Invalid password', { data: { current: 'invalid' }})
+    if (!check) throw this.Boom.badData('invalidPassword', { current: 'invalid', ndut: 'auth' })
     const params = { id: request.user.id }
     const body = { password: request.body.new }
     await this.ndutApi.helper.update({ model, params, body })
     return {
-      message: 'Your password has been successfully updated'
+      message: t('passwordUpdated', { ns: 'auth' })
     }
   }
 }

@@ -29,7 +29,7 @@ module.exports = {
     }
   },
   async handler (request, reply) {
-    if (!supported.includes(request.params.id)) throw this.Boom.notFound('Resource not found')
+    if (!supported.includes(request.params.id)) throw this.Boom.notFound('resourceNotFound')
     const { username, password } = request.body || {}
     try {
       const siteId = request.site ? request.site.id : null

@@ -9,8 +9,8 @@ module.exports = async function (username, password, siteId) {
     const user = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where } })
     result = user.data
   } catch (err) {}
-  if (!result) throw this.Boom.badData('Unknown user or user is disabled', { username: 'unknown' })
+  if (!result) throw this.Boom.badData('unknownUserOrUserIsDisabled', { username: 'unknown', ndut: 'auth' })
   const check = await verifyPassword(password, result.password)
-  if (!check) throw this.Boom.badData('Invalid password', { password: 'invalid' })
+  if (!check) throw this.Boom.badData('invalidPassword', { password: 'invalid', ndut: 'auth' })
   return result
 }

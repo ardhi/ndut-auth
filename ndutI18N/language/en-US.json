@@ -1,0 +1,10 @@
+{
+  "cantFindAnySupportedAuthenticationMethod": "Can't find any supported authentication method",
+  "invalidExpiredTokenOrUserIsDisabled": "Invalid/expired token or user is disabled",
+  "invalidTokenOrUserIsDisabled": "Invalid token or user is disabled",
+  "invalidExpiredTokenPleaseGetANewOne": "Invalid/expired token. Please get a new one",
+  "unknownUserOrUserIsDisabled": "Unknown user or user is disabled",
+  "invalidPassword": "Invalid password",
+  "passwordUpdated": "Your password has been successfully updated",
+  "profileUpdated": "Your profile has been successfully updated"
+}
