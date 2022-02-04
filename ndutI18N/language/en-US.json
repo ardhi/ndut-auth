@@ -6,5 +6,6 @@
   "unknownUserOrUserIsDisabled": "Unknown user or user is disabled",
   "invalidPassword": "Invalid password",
   "passwordUpdated": "Your password has been successfully updated",
-  "profileUpdated": "Your profile has been successfully updated"
+  "profileUpdated": "Your profile has been successfully updated",
+  "alreadyAuthenticated": "You're already logged in as an authenticated user"
 }
