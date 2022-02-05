@@ -16,5 +16,5 @@
     "afterLogin": false,
     "afterLogout": false
   },
-  "dependency": ["ndut-db"]
+  "dependency": ["ndut-db", "ndut-route"]
 }

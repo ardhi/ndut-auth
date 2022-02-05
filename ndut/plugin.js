@@ -16,6 +16,7 @@ const plugin = async function (scope, options) {
   const { _, aneka, getNdutConfig } = scope.ndut.helper
   const { requireBase } = aneka
   const config = await scope.ndut.helper.getConfig()
+  const i18nPrefix = scope.ndutI18N.helper.routePrefix()
   let restConfig
   if (scope.ndutRest) restConfig = getNdutConfig('ndut-rest')
   scope.ndutAuth.protected = {}
@@ -31,7 +32,7 @@ const plugin = async function (scope, options) {
       } catch (err) {}
     }
     items = _.map(items, r => {
-      r.path = `${opts.prefix === '' ? '' : ('/' + opts.prefix)}${r.path}`
+      r.path = `${opts.prefix === '' ? '' : ('/' + opts.prefix)}${m === 'static' ? '' : i18nPrefix}${r.path}`
       return r
     })
     scope.ndutAuth.protected[m] = items

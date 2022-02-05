@@ -1,0 +1,11 @@
+{
+  "cantFindAnySupportedAuthenticationMethod": "Tidak menemukan metode autentikasi manapun juga",
+  "invalidExpiredTokenOrUserIsDisabled": "Token invalid/kadaluarsa atau pengguna sedang di non aktifkan",
+  "invalidTokenOrUserIsDisabled": "Token invalid atau pengguna sedang non di non aktifkan",
+  "invalidExpiredTokenPleaseGetANewOne": "Token invalid/kadaluarsa. Silahkan lakukan pembuatan token baru",
+  "unknownUserOrUserIsDisabled": "Pengguna tidak dikenal atau sedang di non aktifkan",
+  "invalidPassword": "Salah kata sandi",
+  "passwordUpdated": "Kata sandi Anda sukses diubah",
+  "profileUpdated": "Profil Anda sukses diubah",
+  "alreadyAuthenticated": "Anda telah melakukan login sebagai pengguna terautentikasi"
+}
