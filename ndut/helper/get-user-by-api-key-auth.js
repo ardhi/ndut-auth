@@ -8,6 +8,7 @@ module.exports = async function (request, method = 'bearer') {
   else if (method === 'header') token = request.headers[authConfig.apiKeyHeader.toLowerCase()]
   else token = (request.headers.authorization || '').split(' ')[1]
   const where = { status: 'ENABLED' }
+  let result
   if (this.ndutAuth.helper.isMd5String(token)) {
     where.token = this.ndutAuth.helper.hash(token)
     try {
@@ -19,7 +20,6 @@ module.exports = async function (request, method = 'bearer') {
   }
   const decoded = await verifyJwt.call(this, token)
   where.id = decoded.payload.uid
-  let result
   try {
     const item = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where } })
     result = item.data
