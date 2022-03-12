@@ -7,6 +7,7 @@ module.exports = async function (request, method = 'bearer') {
   if (method === 'qs') token = request.query[authConfig.apiKeyQueryString]
   else if (method === 'header') token = request.headers[authConfig.apiKeyHeader.toLowerCase()]
   else token = (request.headers.authorization || '').split(' ')[1]
+  console.log(token)
   const where = { status: 'ENABLED' }
   let result
   if (this.ndutAuth.helper.isMd5String(token)) {

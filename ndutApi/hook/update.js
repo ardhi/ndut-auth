@@ -1,4 +1,7 @@
 module.exports = async function beforeUpdateAuth ({ model, params = {}, filter = {} }) {
   const private = await this.ndutAuth.helper.isPrivateModel(model)
-  if (private && (filter.user || {}).id) params.userId = filter.user.id
+  const updatedBy = await this.ndutAuth.helper.isUpdatedByModel(model)
+  const filterUserId = (filter.user || {}).id
+  if (updatedBy && filterUserId) body.updatedBy = filterUserId
+  if (private && filterUserId) params.userId = filterUserId
 }
