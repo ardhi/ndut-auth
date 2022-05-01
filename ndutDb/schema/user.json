@@ -17,7 +17,8 @@
     "email": {
       "type": "String",
       "length": 50,
-      "required": true
+      "required": true,
+      "index": true
     },
     "firstName": {
       "type": "String",
@@ -66,5 +67,16 @@
     "schema": true,
     "builtinFixture": true
   },
-  "disableAliasCall": false
+  "disableAliasCall": false,
+  "indexes": {
+    "authuser_uniq": {
+      "keys": {
+        "username": 1,
+        "siteId": 1
+      },
+      "options": {
+        "unique": true
+      }
+    }
+  }
 }

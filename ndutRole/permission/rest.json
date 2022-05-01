@@ -16,7 +16,11 @@
   },
   {
     "path": ["/user", "/user/:id"],
-    "method": ["read", "create", "update", "remove"],
+    "method": ["read"]
+  },
+  {
+    "path": ["/user", "/user/:id"],
+    "method": ["create", "update", "remove"],
     "access": "admin"
   }
 ]
