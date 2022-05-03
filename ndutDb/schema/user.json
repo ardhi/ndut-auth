@@ -29,30 +29,6 @@
       "type": "String",
       "length": 50,
       "required": true
-    },
-    "address1": "String",
-    "address2": "String",
-    "city": {
-      "type": "String",
-      "length": 50,
-      "required": true
-    },
-    "zipCode": {
-      "type": "String",
-      "length": 10
-    },
-    "state": {
-      "type": "String",
-      "length": 50
-    },
-    "country": {
-      "type": "String",
-      "length": 2,
-      "required": true
-    },
-    "phone": {
-      "type": "String",
-      "length": 50
     }
   },
   "hiddenProperties": ["password", "token"],
@@ -61,6 +37,7 @@
     "updatedAt": true,
     "deletedAt": true,
     "ndutSiteSiteId": true,
+    "ndutExtraAddress": true,
     "status": true
   },
   "extend": {
