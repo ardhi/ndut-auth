@@ -7,5 +7,6 @@
   "city": "Jakarta",
   "country": "ID",
   "status": "ENABLED",
-  "siteId": 1
+  "siteId": "DEFAULT",
+  "id": "ADMIN"
 }]

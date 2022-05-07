@@ -6,7 +6,7 @@ module.exports = async function (username, password, siteId) {
   if (aneka.isSet(siteId)) where.siteId = siteId
   let result
   try {
-    const user = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where } })
+    const user = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where }, options: { noThrow: false } })
     result = user.data
   } catch (err) {}
   if (!result) throw this.Boom.badData('unknownUserOrUserIsDisabled', { username: 'unknown', ndut: 'auth' })

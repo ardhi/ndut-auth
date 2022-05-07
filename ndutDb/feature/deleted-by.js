@@ -1,11 +1,10 @@
 module.exports = {
   properties: {
     deletedBy: {
-      type: Number,
+      type: String,
+      length: 20,
       required: false,
-      index: true,
-      default: 0,
-      scale: 0
+      index: true
     }
   }
 }
