@@ -3,12 +3,14 @@ module.exports = async function beforeCreateAuth ({ model, body = {}, filter = {
   const private = await this.ndutAuth.helper.isPrivateModel(model)
   const createdBy = await this.ndutAuth.helper.isCreatedByModel(model)
   const updatedBy = await this.ndutAuth.helper.isUpdatedByModel(model)
-  const filterUserId = (filter.user || {}).id
-  if (createdBy && filterUserId) body.createdBy = filterUserId
-  if (updatedBy && filterUserId) body.updatedBy = filterUserId
-  if (private && filterUserId) {
-    body.userId = filterUserId
+  filter.user = filter.user || {}
+  if (!filter.user.id) return
+  if (createdBy) body.createdBy = filter.user.id
+  if (updatedBy) body.updatedBy = filter.user.id
+  if (private) {
+    if (filter.user.username === 'admin' && body.userId) return
+    body.userId = filter.user.id
     return
   }
-  if (supported && filterUserId && !body.userId) body.userId = filterUserId
+  if (supported && !body.userId) body.userId = filter.user.id
 }
