@@ -32,7 +32,18 @@
     }
   },
   "hiddenProperties": ["password", "token"],
-  "feature": ["createdAt", "updatedAt", "deletedAt", "ndutSiteSiteId", "ndutExtraAddress", "status"],
+  "feature": {
+    "createdAt": true,
+    "updatedAt": true,
+    "deletedAt": true,
+    "ndutSiteSiteId": true,
+    "ndutExtraAddress": true,
+    "status": {
+      "schema": {
+        "default": "UNVERIFIED"
+      }
+    }
+  },
   "extend": {
     "schema": true,
     "builtinFixture": true
