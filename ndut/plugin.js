@@ -19,23 +19,25 @@ const plugin = async function (scope, options) {
   const i18nPrefix = scope.ndutI18N.helper.routePrefix()
   let restConfig
   if (scope.ndutRest) restConfig = getNdutConfig('ndut-rest')
-  scope.ndutAuth.protected = {}
-  for (const m of ['route', 'rest', 'static']) {
-    const opts = getNdutConfig(m)
-    if (!opts) continue
-    let items = []
-    for (const n of config.nduts) {
-      const cfg = getNdutConfig(n)
-      try {
-        const routes = await requireBase(`${cfg.dir}/ndutAuth/protected/${m}.json`, scope) || ['*']
-        items = _.concat(items, sanitize(routes, `/${cfg.prefix}/`))
-      } catch (err) {}
+  for (const p of ['protected', 'challanged']) {
+    scope.ndutAuth[p] = {}
+    for (const m of ['route', 'rest', 'static']) {
+      const opts = getNdutConfig(m)
+      if (!opts) continue
+      let items = []
+      for (const n of config.nduts) {
+        const cfg = getNdutConfig(n)
+        try {
+          const routes = await requireBase(`${cfg.dir}/ndutAuth/${p}/${m}.json`, scope) || ['*']
+          items = _.concat(items, sanitize(routes, `/${cfg.prefix}/`))
+        } catch (err) {}
+      }
+      items = _.map(items, r => {
+        r.path = `${opts.prefix === '' ? '' : ('/' + opts.prefix)}${m === 'static' ? '' : i18nPrefix}${r.path}`
+        return r
+      })
+      scope.ndutAuth[p][m] = items
     }
-    items = _.map(items, r => {
-      r.path = `${opts.prefix === '' ? '' : ('/' + opts.prefix)}${m === 'static' ? '' : i18nPrefix}${r.path}`
-      return r
-    })
-    scope.ndutAuth.protected[m] = items
   }
 }
 
