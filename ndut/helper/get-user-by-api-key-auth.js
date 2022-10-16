@@ -12,8 +12,7 @@ module.exports = async function (request, method = 'bearer') {
   if (this.ndutAuth.helper.isMd5String(token)) {
     where.token = this.ndutAuth.helper.hash(token)
     try {
-      const item = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where } })
-      result = item.data
+      result = await this.ndutApi.helper.dbCall({ method: 'findOne', model: 'AuthUser', params: { where } })
     } catch (err) {}
       if (!result) throw this.Boom.badData('invalidExpiredTokenOrUserIsDisabled', { token: 'invalid', ndut: 'auth' })
     return result
@@ -21,8 +20,7 @@ module.exports = async function (request, method = 'bearer') {
   const decoded = await verifyJwt.call(this, token)
   where.id = decoded.payload.uid
   try {
-    const item = await this.ndutApi.helper.findOne({ model: 'AuthUser', params: { where } })
-    result = item.data
+    result = await this.ndutApi.helper.dbCall({ method: 'findOne', model: 'AuthUser', params: { where } })
   } catch (err) {}
   if (!result) throw this.Boom.badData('invalidTokenOrUserIsDisabled', { token: 'invalid', ndut: 'auth' })
   if (this.ndutAuth.helper.hash(decoded.payload.apiKey) !== result.token)
