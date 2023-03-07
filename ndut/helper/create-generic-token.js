@@ -1,6 +1,6 @@
-const defApiKeyAuth = require('../../lib/db-provider/api-key-auth')
+const defCreateGenericToken = require('../../lib/db-provider/generic-token')
 
-module.exports = async function (request, method = 'bearer') {
+module.exports = async function (user) {
   const { _, getNdutConfig } = this.ndut.helper
   const config = getNdutConfig('ndutAuth')
   let result
@@ -8,13 +8,13 @@ module.exports = async function (request, method = 'bearer') {
   for (const p of config.provider) {
     if (p === 'ndutDb') {
       try {
-        result = await defApiKeyAuth.call(this, request, method)
+        result = await defCreateGenericToken.call(this, user)
       } catch (err) {
         e = err
       }
     } else {
       try {
-        result = await this[p].helper.getUserByApiKeyAuth(request, method)
+        result = await this[p].helper.createGenericToken(user)
       } catch (err) {
         e = err
       }

@@ -5,6 +5,7 @@
     "apiKey": true,
     "login": true
   },
+  "provider": ["ndutDb"],
   "apiKeyQueryString": "apiKey",
   "apiKeyHeader": "X-Api-Key",
   "jwt": {
@@ -16,5 +17,5 @@
     "afterLogin": false,
     "afterLogout": false
   },
-  "dependency": ["ndut-db", "ndut-route"]
+  "dependency": ["ndut-route"]
 }

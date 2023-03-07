@@ -16,7 +16,7 @@ const plugin = async function (scope, options) {
   const { _, aneka, getNdutConfig } = scope.ndut.helper
   const { requireBase } = aneka
   const config = await scope.ndut.helper.getConfig()
-  const i18nPrefix = scope.ndutI18N.helper.routePrefix()
+  const i18nPrefix = scope.ndutI18N ? scope.ndutI18N.helper.routePrefix() : ''
   let restConfig
   if (scope.ndutRest) restConfig = getNdutConfig('ndut-rest')
   for (const p of ['protected', 'challanged']) {

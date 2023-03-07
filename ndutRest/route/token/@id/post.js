@@ -1,5 +1,4 @@
 const supported = ['generic', 'jwt']
-const createJwt = require('../../../../lib/misc/create-jwt')
 
 module.exports = {
   schema: {
@@ -33,12 +32,12 @@ module.exports = {
     const { username, password } = request.body || {}
     try {
       const siteId = request.site ? request.site.id : null
-      const result = await this.ndutAuth.helper.getUserByUsernamePassword(username, password, siteId)
-      if (request.params.id === 'generic') return { token: this.ndutAuth.helper.hash(result.password) }
-      if (request.params.id === 'jwt') return createJwt.call(this, result)
+      const user = await this.ndutAuth.helper.getUserByUsernamePassword(username, password, siteId)
+      if (request.params.id === 'generic') return { token: await this.ndutAuth.helper.createGenericToken(user) }
+      if (request.params.id === 'jwt') return await this.ndutAuth.helper.createJwt(user)
     } catch (err) {
       if (!err.isBoom) err = this.Boom.boomify(err)
-      err.output.statusCode = 422
+      err.output.statusCode = err.output.statusCode || 422
       err.reformat()
       throw err
     }

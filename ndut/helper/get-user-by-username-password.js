@@ -1,12 +1,26 @@
-const verifyPassword = require('../../lib/misc/verify-password')
+const defUsernamePassword = require('../../lib/db-provider/username-password')
 
 module.exports = async function (username, password, siteId) {
-  const { aneka } = this.ndut.helper
-  const where = { username, status: 'ENABLED' }
-  if (aneka.isSet(siteId)) where.siteId = siteId
-  let result = await this.ndutApi.helper.dbCall({ method: 'findOne', model: 'AuthUser', params: { where }, options: { noThrow: false } })
-  if (!result) throw this.Boom.badData('unknownUserOrUserIsDisabled', { username: 'unknown', ndut: 'auth' })
-  const check = await verifyPassword(password, result.password)
-  if (!check) throw this.Boom.badData('invalidPassword', { password: 'invalid', ndut: 'auth' })
-  return result
+  const { _, getNdutConfig } = this.ndut.helper
+  const config = getNdutConfig('ndutAuth')
+  let result
+  let e = this.Boom.internal('invalidAuthorizationHandler', { ndut: 'auth' })
+  for (const p of config.provider) {
+    if (p === 'ndutDb') {
+      try {
+        result = await defUsernamePassword.call(this, username, password, siteId)
+      } catch (err) {
+        e = err
+      }
+    } else {
+      try {
+        result = await this[p].helper.getUserByUsernamePassword(username, password, siteId)
+      } catch (err) {
+        e = err
+      }
+    }
+    if (result) break
+  }
+  if (result) return result
+  throw e
 }
