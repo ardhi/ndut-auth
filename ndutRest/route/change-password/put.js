@@ -21,7 +21,7 @@ module.exports = {
     const { t } = this.ndutI18N.helper
     const model = 'AuthUser'
     // TODO: strong password detection
-    const check = await verifyPassword(request.body.current, request.user.password, request.site.id)
+    const check = await verifyPassword(request.body.current, request.user.password)
     if (!check) throw this.Boom.badData('invalidPassword', { current: 'invalid', ndut: 'auth' })
     const params = { id: request.user.id }
     const body = { password: request.body.new }
